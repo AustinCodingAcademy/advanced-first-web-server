@@ -5,8 +5,12 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint src",
-    "start": "nodemon --exec 'eslint src && babel-node src/index'",
+    "start": "npm-watch",
+    "build": "npm test && babel-node src/index",
     "test": "npm run lint"
+  },
+  "watch": {
+    "build": "src/*.js"
   },
   "repository": {
     "type": "git",
@@ -37,6 +41,6 @@
     "eslint": "^3.10.2",
     "eslint-plugin-babel": "^4.0.0",
     "eslint-plugin-react": "^6.9.0",
-    "nodemon": "^1.11.0"
+    "npm-watch": "^0.1.8"
   }
 }
