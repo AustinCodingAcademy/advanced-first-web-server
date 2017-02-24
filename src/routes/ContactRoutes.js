@@ -1,6 +1,6 @@
-const express = ('express');
+import express from 'express';
 const router = express.Router();
-const ContactsController = require('../models/ContactsController');
+import ContactsController from '../controllers/ContactsController';
 
 // Declare GET /contacts route
 router.get('/contacts', ContactsController.list);

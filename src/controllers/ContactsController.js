@@ -1,4 +1,4 @@
-const ContactModel = require('../models/ContactModel');
+import ContactModel from '../models/ContactModel';
 const contactsController = {};
 
 contactsController.list = function (request, response, next) {
