@@ -1,19 +1,27 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 
-// create a new instance of express
 const app = express();
 
-// declare our route
+// Connect to mongo database
+import mongoose from 'mongoose';
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/contact-list');
 
-app.all('/*', (request, response) => {
-  return response.send(request.params['0']);
+app.use(bodyParser.json());
+
+import contactRoutes from './routes/ContactRoutes';
+app.use(contactRoutes);
+
+app.use(function (err, request, response) {
+  return response.status(500).send('Uh oh something went wrong! ' + err);
 });
 
-// set our port to server the application on
+// Set our port
 const PORT = 3001;
 
-// tell our istace of express to listen to request made on our port
-app.listen(PORT, (err) => {
+// Tell our instance of express to listen to request made on our port
+app.listen(PORT, function (err) {
   if (err) {
     return console.log('Error!', err);
   }
