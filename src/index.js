@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import contactRoutes from './routes/ContactRoutes';
+import ContactRoutes from './routes/ContactRoutes';
 
 const app = express();
 
@@ -10,7 +10,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/contact-list');
 
 app.use(bodyParser.json());
-app.use(contactRoutes);
+app.use(ContactRoutes);
 
 // Error handler middleware
 app.use(function (err, request, response) {
