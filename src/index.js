@@ -9,6 +9,9 @@ mongoose.connect('mongodb://localhost/contact-list');
 
 app.use(bodyParser.json());
 app.use(ContactRoutes);
+app.use(function (err, request, response) {
+  return response.status(500).send(`Whoops... mistakes were made. ${err}`);
+});
 
 const PORT = 3001;
 
