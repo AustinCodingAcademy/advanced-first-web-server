@@ -1,25 +1,24 @@
 {
-  "name": "advanced-first-web-server",
-  "version": "1.0.0",
-  "description": "Starter repository for the ACA advanced contact list api project",
+  "name": "Giovanna",
+  "version": "1.0",
+  "description": "ACA's Advance Class: API Contact List Project",
   "main": "index.js",
   "scripts": {
     "lint": "eslint src",
     "start": "nodemon --exec 'eslint src && babel-node src/index'",
     "test": "npm run lint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AustinCodingAcademy/advanced-first-web-server.git"
-  },
+  "repository": "git+https://github.com/AustinCodingAcademy/advanced-first-web-server.git",
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Giovanna Calderoni <gia@imgiacal.com>",
+  "license": "ISC/MIT",
   "bugs": {
     "url": "https://github.com/AustinCodingAcademy/advanced-first-web-server/issues"
   },
   "homepage": "https://github.com/AustinCodingAcademy/advanced-first-web-server#readme",
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.15.1"
+  },
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-core": "^6.18.2",
