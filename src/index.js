@@ -23,28 +23,28 @@ app.get('/', (request, response) => {
   ]);
 });
 
-app.post('/users', (request, response) => {
-  users.push({
-    id: users.length + 1,
-    ...request.body
-  });
-  users.push(user);
+// app.post('/users', (request, response) => {
+//   users.push({
+//     id: users.length + 1,
+//     ...request.body
+//   });
+//   users.push(users);
+//
+//   return response.json(users);
+// });
 
-  return response.json(user);
-});
-
-app.get('/users/:id', (request, response) => {
-  const foundUser = users.find((user) => {
-    return String(user.id) === request.params.id;
-  });
-
-  return response.json(foundUser || null);
-});
+// app.get('/users/:id', (request, response) => {
+//   const foundUser = users.find((user) => {
+//     return String(user.id) === request.params.id;
+//   });
+//
+//   return response.json(foundUser || null);
+// });
 
 
-app.delete('/users/:id', (request, response) => {
-  return response.json();
-});
+// app.delete('/users/:id', (request, response) => {
+//   return response.json();
+// });
 
 app.get('/users', (request, response) => {
   return response.json({
@@ -63,7 +63,8 @@ const PORT = 3001;
 
 app.listen(PORT, (err) => {
   if (err) {
-    return console.log('Server Error', err);
+    console.log('Server Error', err);
+    return;
   }
 
   console.log('Server is listening on port' + PORT);
