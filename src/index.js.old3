@@ -1,0 +1,75 @@
+// 1. Import the express module
+import express from "express";
+
+// 2. Create a new instance of express
+const app = express();
+
+// 12. import bodyparser middleware
+// import bodyParser from "body-parser";
+
+
+// 8.   db of users
+const users = [
+  {
+    id: 1,
+    name: 'Dale Cooper'
+  },
+  {
+    id: 2,
+    name: 'Spike Spiegel'
+  }
+];
+
+
+// 3. Set our port to server the application on
+const PORT = 8001;
+
+
+// 6. / route
+app.get("/", (request, response) => {
+  console.log("/route was called");
+  return response.json({
+    that: "works for /"
+  });
+});
+
+// 5. users route
+app.get("/users", (request, response) => {
+  console.log("/users route was called ", users);
+  return response.json(users);
+});
+
+//9. users/*
+app.get('/users/:id', (request, response) => {
+  console.log(request.params.id);
+  // return response.json(null);
+  const foundUser = users.find((user) => {
+    return String(user.id) === request.params.id
+  });
+  console.log(foundUser);
+  return response.json(foundUser || null);
+});
+
+// 10.  post to users array
+app.post("/users", (request, response) => {
+  return response.json({
+    post: "recieved"
+  })
+});
+
+
+// 7.  default message route
+app.get('/*', (request, response) => {
+  return response.json({
+    message:  "not implmented yet"
+  });
+});
+
+
+// 4. Tell our instance of express to listen to request made on our port
+app.listen(PORT, (err) => {
+  if (err) {
+    return console.log('Error!', err);  // error handler just in cases
+  }
+  return console.log('Listening on: http://localhost:' + PORT)
+});

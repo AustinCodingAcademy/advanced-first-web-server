@@ -111,14 +111,16 @@ app.get('/users/:id', (request, response) => {
 
 // 14. delete
 app.delete('/users/:id', (request, response) => {
- User.findByIdAndRemove(request.params.id).exec()
-  .then((user) => {
-    return response.json(user);
-  })
-  .catch((err) => {
-    console.log('Error deleting ', err);
+  console.log(request.params.id)
+  const foundUser = users.find((user) => {
+    return String(user.id) === request.params.id;
   });
+  // @TODO: implement removal
+    console.log("retrun roundUser", foundUser);
+  return response.json(foundUser || null);
 });
+
+
 
 // // 10.  post to users array
 // app.post("/users", (request, response) => {
