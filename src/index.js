@@ -31,6 +31,13 @@ const app = express();
 // 13. use bodyparser middleware with express
 app.use(bodyParser.json());
 
+// 20. middleware lecture - Example
+app.use((request, response, next) => {
+  console.log("middleware is executed")
+  next();
+});
+
+
 
 // 8.   db of users
 // const users = [
@@ -59,8 +66,11 @@ app.get("/", (request, response) => {
 
 
 // 5. users route
-app.get('/users', (request, response) => {
+app.get('/users', (request, response, next) => {
 //  console.log("/users route was called ", users);
+
+// 23. new user - ^^ add 'next above too'
+
 
 // user object is defined below from the POST
   User.find().exec()
@@ -68,7 +78,7 @@ app.get('/users', (request, response) => {
     return response.json(data);
   })
   .catch(err => {
-    return console.log('fetching failed ', err);
+    return console.log('fetching failed ', err.message);
     // return response.json('exectued');
   });
 });
@@ -90,15 +100,16 @@ http://someurl.com/users?name=blitzen
 
 
 
-//9. users/id
-app.get('/users/:id', (request, response) => {
+//22. added next
+app.get('/users/:id', (request, response, next) => {
 
   User.findById(request.params.id).exec()
   .then ((user) => {
     return response.json(user);
   })
-  .catch((err) =>{
-    return console.log('Error', err);
+  .catch((err) => {
+// 22. sned  error  to error handler
+    return next(err);
   });
   // console.log(request.params.id);
   // // return response.json(null);
@@ -110,13 +121,14 @@ app.get('/users/:id', (request, response) => {
 });
 
 // 14. delete
-app.delete('/users/:id', (request, response) => {
- User.findByIdAndRemove(request.params.id).exec()
+app.delete('/users/:id', (request, response, next) => {
+  User.findByIdAndRemove(request.params.id).exec()
   .then((user) => {
     return response.json(user);
   })
   .catch((err) => {
-    console.log('Error deleting ', err);
+    console.log('Error deleting ', err.message);
+    return next(err);
   });
 });
 
@@ -131,7 +143,7 @@ app.delete('/users/:id', (request, response) => {
 //   return response.json(user);
 // });
 
-app.post("/users", (request, response) => {
+app.post('/users', (request, response, next) => {
   // create user object first;  new instance of User
   const user = new User(request.body);
 
@@ -140,9 +152,10 @@ app.post("/users", (request, response) => {
    console.log('User was saved');
    return response.json(storedUser);
  })
- .catch(() => {
+ .catch((err) => {
    console.log('User was NOT saved');
-   return response.json('Executed')
+   // return response.json('Executed')
+   return next(err);
  });
 });
 
@@ -150,9 +163,24 @@ app.post("/users", (request, response) => {
 // 7.  default message route
 app.get('/*', (request, response) => {
   return response.json({
-    message:  "not implmented yet"
+    message: 'Not implmented yet'
   });
 });
+
+
+// 21. middleweare lecutre - error example
+// pass as a function; 4 arguments make it an error handler
+// 3 arguments it is exectued like "normal" middleware
+app.use((err, request, response, next) => {
+  console.log('error middleware is executed', err)
+  // next();
+
+// 23.  error response plus status code
+  return response.status(500).json({message: err.message});
+});
+
+
+
 
 
 // 4. Tell our instance of express to listen to request made on our port
