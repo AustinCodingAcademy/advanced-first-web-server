@@ -1,9 +1,27 @@
 import express from 'express';
 /*  eslint-disable no-unused-vars*/
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import User from './models/Users';
+
+/* eslint-disable */
+
+mongoose.connect('mongodb://localhost/local');
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+  console.log('MongoDB is connected');
+});
 
 const app = express();
+app.use(bodyParser.json());
+
 
 const PORT = 3000;
+
+
+
 
 app.get('/recipes', (request, response, next) => {
   console.log('recipes was requested');
@@ -12,7 +30,7 @@ app.get('/recipes', (request, response, next) => {
   });
 });
 
-app.get('/things', (request, response, next) => {
+app.get('/users', (request, response, next) => {
   console.log('things was requested');
   return response.json({
     message: 'things is now a go-go'
