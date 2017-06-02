@@ -67,12 +67,21 @@ app.get('/people', (request, response, next) => {
 
 // this wild card id creates a key value pair id:## inside the params objects
 app.get('/people/:id', (request, response) => {
-  console.log(request.params);
+  const query = request.params;
+  console.log(query);
   const match = People.find((person) => {
-    return String(person.id) === request.params.id;
+    return String(person.id) === query.id;
   });
-  return response.json(match);
+  if (match) {
+    return response.json(match);
+  }
+  return response.json('nothing in ' + query.id);
 });
+
+// app.get('/people/*', (request, response) => {
+//   console.log('didn\'t find that user');
+//   return response.json(null);
+// });
 
 // .get handles GET requests, points the request to a file and return a response
 app.get('/users', (request, response, next) => {
