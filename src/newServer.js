@@ -87,12 +87,11 @@ app.get('/people/*', (request, response) => {
 });
 
 app.post('/people', (request, response) => {
-  console.log('Post was recieved');
   //  the body object is created with the body-parser that express app is using
   console.log(request.body);
-  return response.json({
-    response: request.body
-  });
+  const newPerson = {id: People.length + 1, ...request.body};
+  People.push(newPerson);
+  return response.json({newPerson});
 });
 
 // .get handles GET requests, points the request to a file and return a response
