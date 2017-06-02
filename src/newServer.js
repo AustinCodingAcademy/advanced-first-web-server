@@ -78,10 +78,18 @@ app.get('/people/:id', (request, response) => {
   return response.json('nothing in ' + query.id);
 });
 
-// app.get('/people/*', (request, response) => {
-//   console.log('didn\'t find that user');
-//   return response.json(null);
-// });
+// This is the wildcard to take care of any random inputs
+app.get('/people/*', (request, response) => {
+  console.log('didn\'t find that user');
+  return response.json(null);
+});
+
+app.post('/people', (request, response) => {
+  console.log('Post was recieved');
+  return response.json({
+    response: 'post'
+  });
+});
 
 // .get handles GET requests, points the request to a file and return a response
 app.get('/users', (request, response, next) => {
