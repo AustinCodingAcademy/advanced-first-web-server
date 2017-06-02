@@ -7,6 +7,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 
 // parses the json file out from models for request and responses
+
 import bodyParser from 'body-parser';
 
 // we use models to maintain data structure integrity and and handle CRUD Methods
@@ -34,6 +35,7 @@ db.once('open', function () {
 const app = express();
 
 // says to use the bodyParser function to return responses and requests
+// it is a middleware and it extends the functionality of the express
 app.use(bodyParser.json());
 
 // sets the port for the app to run on.
@@ -86,8 +88,10 @@ app.get('/people/*', (request, response) => {
 
 app.post('/people', (request, response) => {
   console.log('Post was recieved');
+  //  the body object is created with the body-parser that express app is using
+  console.log(request.body);
   return response.json({
-    response: 'post'
+    response: request.body
   });
 });
 
