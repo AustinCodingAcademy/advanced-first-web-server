@@ -32,8 +32,6 @@ db.once('open', function () {
   console.log('mongoDB connected');
 });
 
-
-
 // 10. create the Router
 const app = express();
 
@@ -49,9 +47,6 @@ app.use((request, response, next) => {
   next();
 });
 
-
-
-
 // 6. / route
 app.get('/', (request, response) => {
   console.log('/route was called');
@@ -59,8 +54,6 @@ app.get('/', (request, response) => {
     that: 'works for /'
   });
 });
-
-
 
 // 7.  default message route
 app.get('/*', (request, response) => {
@@ -70,19 +63,18 @@ app.get('/*', (request, response) => {
 });
 
 
-// 20. middleweare lecutre - error example
+// 21. middleweare lecutre - error example
 // pass as a function; 4 arguments make it an error handler
 // 3 arguments it is exectued like "normal" middleware
 app.use((err, request, response, next) => {
-  console.log('error middleware is executed', err)
+  console.log('error middleware is executed')
+  // console.log('error middleware is executed', err)
 
 // error response plus status code
   return response.status(500).json({message: err.message});
 });
 
-
-
-
+/* This is put at bottom of the file on purpose  */
 // 2. Set our port to server the application on
 const PORT = 8001;
 
