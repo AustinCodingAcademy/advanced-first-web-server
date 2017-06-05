@@ -22,8 +22,8 @@ const UserController = {
     });
   },  // end of find
 
-list:(request, response, next) => {
-  User.find().exec()
+  list: (request, response, next) => {
+    User.find().exec()
   .then((user) => {
     return response.json(user);
   })
@@ -31,7 +31,7 @@ list:(request, response, next) => {
 // send error  to error handler
     return next(err);
   });
-},  // end of list
+  },  // end of list
 
   delete: (request, response) => {
     User.findByIdAndRemove(request.params.id).exec()
@@ -48,7 +48,7 @@ list:(request, response, next) => {
     const user = new User(request.body);
     user.save()
     .then(storedUser => {
-      console.log('User was saved.')
+      console.log('User was saved.');
       return response.json(storedUser);
     })
     .catch((err) => {

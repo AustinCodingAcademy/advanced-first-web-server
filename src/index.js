@@ -43,7 +43,7 @@ app.use(UserRouter);
 
 // 20. middleware lecture - Example
 app.use((request, response, next) => {
-  console.log('middleware is executed')
+  console.log('middleware is executed');
   next();
 });
 
@@ -67,7 +67,7 @@ app.get('/*', (request, response) => {
 // pass as a function; 4 arguments make it an error handler
 // 3 arguments it is exectued like "normal" middleware
 app.use((err, request, response, next) => {
-  console.log('error middleware is executed')
+  console.log('error middleware is executed');
   // console.log('error middleware is executed', err)
 
 // error response plus status code
@@ -83,5 +83,5 @@ app.listen(PORT, (err) => {
   if (err) {
     return console.log('Error!', err);  // error handler just in cases
   }
-  return console.log('Listening on: http://localhost:' + PORT)
+  return console.log('Listening on: http://localhost:' + PORT);
 });
