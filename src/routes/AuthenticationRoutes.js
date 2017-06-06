@@ -6,6 +6,9 @@ passports is a dependency.
 import express from 'express';
 import User from '../models/UserModel';
 import bcrypt from 'bycrypt';
+import passport from '/passport';
+
+import '../Services/passport';
 
 const router = express.Router();
 
@@ -33,6 +36,18 @@ router.post('/api/signup', (req, res, next) => {
       });
     })
     .catch(err => next(err));
+});
+
+const signinStratagy = passport.authenticare('singinStratagy', { session: false});
+
+// eslint-disable-next-line
+router.post('/api/signin', signinStratagy, (req, res, next) => {
+  res.json({ message: 'you are authenticated!'});
+});
+
+// eslint-disable-next-line
+router.post('/singup', (req, res, next) => {
+  res.json({message: 'welcome'});
 });
 
 export default router;
