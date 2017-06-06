@@ -7,6 +7,14 @@ const app = express();
 app.use(bodyParser.json());
 
 const PORT = 3000;
+/*
+app.get('/users', (request, response) => {
+  console.log('testing the action');
+  return response.json('hello');
+
+});
+console.log('where are we?');
+*/
 
 const users = [
   {
@@ -22,6 +30,7 @@ const users = [
     name: 'Susan'
   }
 ];
+
 
 app.get('/users', (request, response) => {
   response.json(users);
@@ -59,12 +68,13 @@ app.delete('/users/:id' , (request, response) => {
 
  // wild card
 app.get('/*', (err, request, response, next) => {
+  console.log('test');
   next(err);
 });
 
 // javasccript error object
 
-app.get('/user', (err, request, response, next) => {
+app.get('/users', (err, request, response, next) => {
   return next(new Error('Error is thrown'));
 });
 
