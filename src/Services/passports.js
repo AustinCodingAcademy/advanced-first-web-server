@@ -2,6 +2,8 @@ import bcrypt from 'bcrypt';
 import passport from 'passport';
 import User from '../models/UserModel';
 import LocalStratagy from 'passport-local';
+import { JwtStrategy, ExtractJwt} from 'passport-jwt';
+
 
 const singinStratagy = new LocalStratagy((username, password, done) => {
   User.findOne({ user: username}).exec()
@@ -22,4 +24,24 @@ const singinStratagy = new LocalStratagy((username, password, done) => {
   .catch(err => done(err, false));
 });
 
+const jwtOptions = {
+  secretOrKey: process.env.SECRET,
+
+  jwtFromRequest: ExtractJwt.fromHeader('Authorization')
+};
+
+const authStrategy = new JwtStrategy(jwtOptions, (payload, done) => {
+  User.findById(payload.userId, (err, user) => {
+    if (err) {
+      return done(err, false);
+    }
+    if (user) {
+      done(null, false);
+    } else {
+      done(null, false);
+    }
+  });
+});
+
+passport.use('authStratagy', authStrategy);
 passport.use('singinStratagy', singinStratagy);

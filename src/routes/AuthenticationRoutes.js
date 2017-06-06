@@ -7,6 +7,7 @@ import express from 'express';
 import User from '../models/UserModel';
 import bcrypt from 'bycrypt';
 import passport from '/passport';
+import jwt from 'jwt-simple';
 
 import '../Services/passport';
 
@@ -39,6 +40,16 @@ router.post('/api/signup', (req, res, next) => {
 });
 
 const signinStratagy = passport.authenticare('singinStratagy', { session: false});
+
+function tokenForUser(user) {
+  const timestamp = new Date().getTime();
+  return jwt.encode({userId: user.id, iat: timestamp}, process.env.SECRET);
+}
+
+// eslint-disable-next-line
+router.post('/api/signin', signinStratagy, (req,res, next) => {
+  res.json({ token: tokenForUser(req.user)});
+});
 
 // eslint-disable-next-line
 router.post('/api/signin', signinStratagy, (req, res, next) => {
