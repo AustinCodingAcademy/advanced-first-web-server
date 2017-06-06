@@ -4,7 +4,7 @@ import User from '../models/UserModel';
 import LocalStratagy from 'passport-local';
 
 const singinStratagy = new LocalStratagy((username, password, done) => {
-  User.findOne({username: username}).exec()
+  User.findOne({ user: username}).exec()
     .then(user => {
       if (!user) {
         return done(null, false);
