@@ -12,6 +12,9 @@ import bodyParser from 'body-parser';
 // this promise must be global so mongoose can use it with DB and in here
 mongoose.Promise = global.Promise;
 
+// this is where our secret encoder is
+require('dotenv').config();
+
 // we use models to maintain data structure integrity and and handle CRUD Methods
 // CRUD = Create, Read, Update, Delete
 // Is singular because we are talking about one single instance of the entire
