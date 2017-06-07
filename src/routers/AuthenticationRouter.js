@@ -1,3 +1,4 @@
+require('dotenv').config();
 import express from 'express';
 import User from '../models/UserModel';
 import passport from 'passport';
@@ -16,12 +17,11 @@ const USERS_PATH = '/users';
 // add next() to the arguments in this controller
 function tokenForUser(user) {
   const timeStamp = new Date().getTime();
-  return jwt.encode({userId: user.id, iat: timeStamp}, 'abc123');
+  return jwt.encode({userId: user.id, iat: timeStamp}, '');
 }
 
 router.post(USERS_PATH + '/signin', signInStrategy, (request, response) => {
-  // need to return response.json({token: tokenForUser(request.user)});
-  return response.json('You\'ve been authenticated!');
+  return response.json({token: tokenForUser(request.user)});
 });
 
 router.post(USERS_PATH + '/signup', (request, response, next) => {
@@ -47,7 +47,7 @@ router.post(USERS_PATH + '/signup', (request, response, next) => {
         user.save()
           // (user => response.json(user))
           // need to return response.json({token: tokenForUser(user)});
-          .then(response.json(user));
+          .then(response.json({token: tokenForUser(user)}));
       })
     .catch(err => next(err));
     });
