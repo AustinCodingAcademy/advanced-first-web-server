@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-import User from './models/Users';
+import User from './models/UserModel';
 
 /*  eslint-disable no-unused-vars*/
 
@@ -14,6 +14,7 @@ db.once('open', function () {
 });
 
 const app = express();
+
 const PORT = 5100;
 
 app.use(bodyParser.json());
