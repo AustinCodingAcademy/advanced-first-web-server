@@ -1,16 +1,22 @@
 import express from 'express';
 import User from '../models/UserModel';
-
+import passport from 'passport';
 // import the controller when we have that cleaned up
 // import AuthenticationController from '../controllers/AuthenticationController';
 import bcrypt from 'bcrypt';
+require('../services/passport');
 
 const router = express.Router();
+const signInStrategy = passport.authenticate('signInStrategy', {session: false});
 const USERS_PATH = '/users';
 
 // This is the request in postman that gets us here
 // http://localhost:3000/users/signup
 // add next() to the arguments in this controller
+
+router.post(USERS_PATH + '/signin', signInStrategy, (request, response) => {
+  return response.json('You\'ve been authenticated!');
+});
 
 router.post(USERS_PATH + '/signup', (request, response, next) => {
   const {username, password} = request.body;
