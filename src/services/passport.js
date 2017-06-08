@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import passport from 'passport';
 import User from '../models/UserModel';
 import LocalStrategy from 'passport-local';
-import {JwtStrategy, ExtractJwt} from 'passport-jwt';
+// import {JwtStrategy, ExtractJwt} from 'passport-jwt';
 
 const signInStrategy = new LocalStrategy((username, password, done) => {
   User.findOne({username}).exec()
@@ -23,24 +23,24 @@ const signInStrategy = new LocalStrategy((username, password, done) => {
   .catch(err => done(err, false));
 });
 
-const jwtOptions = {
-  secretKey: process.env.SECRET,
-  jwtFromRequest: ExtractJwt.fromHeader('authorization')
-};
+// const jwtOptions = {
+//   secretKey: process.env.SECRET,
+//   jwtFromRequest: ExtractJwt.fromHeader('authorization')
+// };
+//
+// const authStrategy = new JwtStrategy(jwtOptions, (payload, done) => {
+//   User.findOne(payload.userId, (err, user) => {
+//     if (err) {
+//       return done(err, false);
+//     }
+//     if (user) {
+//       return done(null, user);
+//     }
+//     done(null, false);
+//   });
+// });
 
-const authStrategy = new JwtStrategy(jwtOptions, (payload, done) => {
-  User.findOne(payload.userId, (err, user) => {
-    if (err) {
-      return done(err, false);
-    }
-    if (user) {
-      return done(null, user);
-    }
-    done(null, false);
-  });
-});
-
-passport.use('authStrategy', authStrategy);
+// passport.use('authStrategy', authStrategy);
 passport.use('signInStrategy', signInStrategy);
 
 // stopped at destructuring on the web guide

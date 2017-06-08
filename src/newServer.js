@@ -1,7 +1,6 @@
 /*  eslint-disable no-unused-vars*/
 // this is where our secret encoder is
 require('dotenv').config();
-
 // the library we're using to handle request and responses
 import express from 'express';
 
@@ -13,8 +12,6 @@ import bodyParser from 'body-parser';
 
 // this promise must be global so mongoose can use it with DB and in here
 mongoose.Promise = global.Promise;
-
-
 
 // we use models to maintain data structure integrity and and handle CRUD Methods
 // CRUD = Create, Read, Update, Delete

@@ -1,4 +1,3 @@
-require('dotenv').config();
 import express from 'express';
 import User from '../models/UserModel';
 import passport from 'passport';
@@ -17,8 +16,10 @@ const USERS_PATH = '/users';
 // add next() to the arguments in this controller
 function tokenForUser(user) {
   const timeStamp = new Date().getTime();
-  return jwt.encode({userId: user.id, iat: timeStamp}, '');
+  console.log(process.env.SECRET);
+  return jwt.encode({userId: user.id, iat: timeStamp}, process.env.SECRET);
 }
+// process.env.SECRET
 
 router.post(USERS_PATH + '/signin', signInStrategy, (request, response) => {
   return response.json({token: tokenForUser(request.user)});
