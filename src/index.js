@@ -1,54 +1,64 @@
-// Your server code here...
 import express from 'express';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import ContactModel from './models/ContactModel';
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/first-web-server');
 
 const app = express();
+app.use(bodyParser.json());
 
-app.get('/', (request, response) => {
-  return response.json({message: 'you tried it'});
+// GETTING ALL THINGS
+app.get('/contacts', (request,response) => {
+  ContactModel.find({}).exec()
+  .then(contacts => {
+    return response.json(contacts);
+  });
 });
 
-app.post('/', (request, response) => {
-  return response.json({message: 'yep you did it, posted!'});
+// CREATING NEW THINGS
+app.post('/contacts', (request,response) => {
+  const contact = new ContactModel(request.body);
+  contact.save()
+  .then(contact => {
+    return response.json(contact);
+  });
 });
 
-app.get('/contacts', (request, response) => {
-  return response.json([
-    {
-      _id: 1,
-      name: 'Dale Cooper',
-      occupation: 'FBI Agent',
-      avatar: 'https://upload.wikimedia.org/wikipedia/en/5/50/Agentdalecooper.jpg'
-    },
-    {
-      _id: 2,
-      name: 'Spike Spiegel',
-      occupation: 'Bounty Hunter',
-      avatar: 'http://vignette4.wikia.nocookie.net/deadliestfiction/images/d/de/Spike_Spiegel_by_aleztron.jpg/revision/latest?cb=20130920231337'
-    },
-    {
-      _id: 3,
-      name: 'Wirt',
-      occupation: 'adventurer',
-      avatar: 'http://66.media.tumblr.com/5ea59634756e3d7c162da2ef80655a39/tumblr_nvasf1WvQ61ufbniio1_400.jpg'
-    },
-    {
-      _id: 4,
-      name: 'Michael Myers',
-      occupation: 'Loving little brother',
-      avatar: 'http://vignette2.wikia.nocookie.net/villains/images/e/e3/MMH.jpg/revision/latest?cb=20150810215746'
-    },
-    {
-      _id: 5,
-      name: 'Dana Scully',
-      occupation: 'FBI Agent',
-      avatar: 'https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg'
-    }
-  ]);
-});
-
+// GETTING ONE THING
 app.get('/contacts/:id', (request, response) => {
-  return response.json({theID: request.params.id});
+  ContactModel.findById(request.params.id).exec()
+  .then(contact => {
+    return response.json(contact);
+  });
 });
+
+// ADD ONE THING
+app.put('/contacts/:id', (request, response) => {
+  ContactModel.findById(request.params.id).exec()
+  .then(contact => {
+    contact.firstName = request.body.firstName || contact.firstName;
+    contact.lastName = request.body.lastName || contact.lastName;
+    contact.occupation = request.body.occupation || contact.occupation;
+    contact.avatar = request.body.avatar || contact.avatar;
+    contact.address = request.body.address || contact.address;
+    contact.phone = request.body.phone || contact.phone;
+    return contact.save();
+  })
+  .then(contact => {
+    return response.json(contact);
+  });
+});
+
+app.delete('/contacts/:id', (request,response) => {
+  ContactModel.remove({_id: request.params.name}).exec()
+  .then(contact => {
+    return response.send('delete successful');
+  });
+});
+
+
 
 app.listen(3002, (err) => {
   if (err) {
