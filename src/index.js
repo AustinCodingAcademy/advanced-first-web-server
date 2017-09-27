@@ -9,7 +9,7 @@ mongoose.connect('mongodb://localhost/first-web-server');
 const app = express();
 app.use(bodyParser.json());
 
-// GETTING ALL THINGS
+// GETTING ALL THINGS - LIST
 app.get('/contacts', (request,response) => {
   ContactModel.find({}).exec()
   .then(contacts => {
@@ -17,16 +17,16 @@ app.get('/contacts', (request,response) => {
   });
 });
 
-// CREATING NEW THINGS
+// CREATING NEW THINGS - CREATE
 app.post('/contacts', (request,response) => {
   const contact = new ContactModel(request.body);
   contact.save()
-  .then(contact => {
-    return response.json(contact);
+  .then(cont => {
+    return response.json(cont);
   });
 });
 
-// GETTING ONE THING
+// GETTING ONE THING - SHOW
 app.get('/contacts/:id', (request, response) => {
   ContactModel.findById(request.params.id).exec()
   .then(contact => {
@@ -34,7 +34,7 @@ app.get('/contacts/:id', (request, response) => {
   });
 });
 
-// ADD ONE THING
+// ADD ONE THING - UPDATE
 app.put('/contacts/:id', (request, response) => {
   ContactModel.findById(request.params.id).exec()
   .then(contact => {
@@ -51,12 +51,13 @@ app.put('/contacts/:id', (request, response) => {
   });
 });
 
-app.delete('/contacts/:id', (request,response) => {
-  ContactModel.remove({_id: request.params.name}).exec()
-  .then(contact => {
-    return response.send('delete successful');
-  });
-});
+// // DELETE ONE THING - UPDATE
+// app.delete('/contacts/:id', (request,response) => {
+//   ContactModel.remove({_id: request.params.name}).exec()
+//   .then(contact => {
+//     return response.send();
+//   });
+// });
 
 
 

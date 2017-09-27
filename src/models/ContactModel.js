@@ -10,15 +10,15 @@ const schema = new mongoose.Schema({
     type: String
   },
   address: {
-    required: true,
+    required: false,
     type: String
   },
   phone: {
-    required: true,
+    required: false,
     type: String
   },
   occupation: {
-    required: true,
+    required: false,
     type: String
   },
   avatar: {
@@ -31,5 +31,7 @@ const schema = new mongoose.Schema({
   },
 });
 
-const ContactModel = mongoose.model('Contact',schema);
-export default ContactModel;
+export default mongoose.model('Contact', schema);
+
+// const ContactModel = mongoose.model('Contact',schema);
+// export default ContactModel;
