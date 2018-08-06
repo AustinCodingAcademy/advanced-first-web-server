@@ -3,7 +3,6 @@ let express = require("express");
 let users = require("./state").users;
 const app = express();
 
-
 //I commented out the original code before refactoring using Express, and included the instructions
 
 //app.use(function(request,response,next){
