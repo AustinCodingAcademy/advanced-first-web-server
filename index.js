@@ -7,10 +7,10 @@ app.use(express.static("public"));
 const users = require("./state").users;
 
 app.get("/users", (req, res, next) => {
-  res.send(users);
+  return res.send(users);
 });
 app.get("/users/1", (req, res, next) => {
-  res.send(users[0]);
+  return res.send(users[0]);
 });
 app.post("/users", (req, res, next) => {
   users.push({
@@ -20,15 +20,15 @@ app.post("/users", (req, res, next) => {
     avatar:
       "https://pbs.twimg.com/profile_images/858002219311837185/3hOvqcN1_400x400.jpg"
   });
-  res.json(users[users.length - 1]);
+  return res.json(users[users.length - 1]);
 });
 app.put("/users/1", (req, res, next) => {
   users[0].name = "bob";
-  res.json(users[0]);
+  return res.json(users[0]);
 });
 app.get("/users/1", (req, res, next) => {
   users.splice(0, 1);
-  res.send("deleted");
+  return res.send("deleted");
 });
 
 app.listen(3002, err => {
