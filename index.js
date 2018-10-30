@@ -12,7 +12,8 @@ app.use(bodyParser.json());
 
 // GET
 app.get("/users", function(req, res, next) {
-   res.json(users);
+   let allUsers = users.filter((u) => u.isActive)
+   res.json(allUsers);
 })
 
 app.get("/users/1", function (req, res, next) {
@@ -21,6 +22,8 @@ app.get("/users/1", function (req, res, next) {
 
 // userId can be anything, custom variable
 app.get("/users/:userId", function (req, res, next) {
+   // let user = users.find((u) => u._id === req.params.id);
+   // return res.json(user);
    return res.json(users[req.params.userId - 1]);
 })
 
@@ -38,6 +41,8 @@ app.get("/users/:userId", function (req, res, next) {
 // })
 
 app.post("/users", (req, res, next) => {
+   // increment counter instead of finding id of last user and adding 1
+   // last user may be deleted, or users may be out of order
    idCount++;
    const newUser = {
       _id: idCount,
