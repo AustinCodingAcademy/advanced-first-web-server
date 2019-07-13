@@ -1,4 +1,5 @@
-exports.users = [
+module.exports = {
+users: [
     {
         "_id": 1,
         "name": "Dale Cooper",
@@ -30,3 +31,6 @@ exports.users = [
         "avatar": "https://pbs.twimg.com/profile_images/718881904834056192/WnMTb__R.jpg"
     }
 ]
+}
+
+
