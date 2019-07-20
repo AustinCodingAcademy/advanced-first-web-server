@@ -14,7 +14,7 @@ users: [
     },
     {
         "_id": 3,
-        "name": "Wirt",
+        "name": "wirt",
         "occupation": "adventurer",
         "avatar": "http://66.media.tumblr.com/5ea59634756e3d7c162da2ef80655a39/tumblr_nvasf1WvQ61ufbniio1_400.jpg"
     },
