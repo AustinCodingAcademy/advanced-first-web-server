@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/users');
 const mongoose = require('mongoose');
+let User = require('./models/UserModel')
 
 mongoose.connect('mongodb+srv://GChivas:smitty5smitty5@cluster0-e2mbo.mongodb.net/advanced-express-practice?retryWrites=true', {useNewUrlParser: true})
 
@@ -11,15 +12,8 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 app.use(userRoutes);
 
-let userSchema = new mongoose.Schema({
-    name: String,
-    occupation: String,
-    weapon: String
-});
-
-let User = mongoose.model('User', userSchema);
- 
-let rick = new User(
+//instantiate a new document: 
+/*let rick = new User(
     { 
         name: 'Rick Grimes',
         occupation:'Stuff n Thangs expert',
@@ -27,12 +21,22 @@ let rick = new User(
     }
 );
 rick.save()
-.then(() => console.log('user saved'));
+.then(() => console.log('user saved'));*/
 
+//find method:
+User.find({name:"Daryl Dixon"},function(err,users){
+    if(err)
+      return console.log(err);
+      console.log(users)  
+})
 
-
-
-
+//find by id and update:
+User.findByIdAndUpdate("5d3e772356b25f44ab87a6c7",{weapon:"Lucille"}, function(err,result){
+    if(err){
+        console.log(err)
+    }
+    console.log("Result is: " + result)
+});
 
 
 const PORT = process.env.PORT || 3000
