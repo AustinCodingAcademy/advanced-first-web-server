@@ -1,4 +1,6 @@
 let state = require('../state');
+
+//pull from mongodb databse instead of state.js
 let users = state.users
 
 //GET
