@@ -1,39 +1,41 @@
-let state = require('../state');
+const User = require('../models/UserModel')
 
-//pull from mongodb databse instead of state.js
-let users = state.users
 
-//GET
 exports.list = function list(req,res){
-    res.json(users)
+    User.find(function(err,users){
+        if(err)
+          return console.log(err);
+          else{
+            res.json(users) 
+          }    
+    })
 };
-//GET by ID
+
 exports.show = function show(req,res){
-    let foundUser = users.find(u=>u["_id"] == req.params.someid)
-    res.json(foundUser)
+    User.findById(req.params.id,function(err,user){
+        if(err)
+          return console.log(err);
+          else{
+            res.json(user)  
+          }  
+    })
 };
-//GET by name
-exports.showByName = function(req,res){
-    let filtereduser = users.filter(u=>u.name === req.params.userName)
-    res.json(filtereduser)
-};
-//POST
 exports.create = function create(req,res){
-    let newUser = req.body;
-    users.push(newUser)
-    res.json(newUser)
+    let newUser = new User(req.body);
+    newUser.save()
+    res.json(newUser)  
 };
-//PUT
+
 exports.update = function update(req,res){
-    let foundUserIndex = users.findIndex((u => u["_id"] == req.params.someid));
-    users[foundUserIndex] = req.body
-    res.json(req.body)
+    User.findByIdAndUpdate(req.params.id,{$set:req.body},{new: true}, function(err,user){
+        if(err){
+            console.log(err)
+        }
+        res.json(user)   
+    }); 
 };
-//DELETE
+
 exports.remove = function remove(req,res){
-    let foundUserIndex = users.findIndex((u => u["_id"] == req.params.someid));
-    users[foundUserIndex].isActive= "false";
+    User.deleteById(req.params.id,function (err) {});
     res.send("deleted")
 }
-
-//NOTE to self: CRUD API: Create, Read, Update and Delete
