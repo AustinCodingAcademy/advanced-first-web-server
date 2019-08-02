@@ -1,37 +1,37 @@
-const User = require('../models/UserModel')
+const Product = require('../models/ProductModel')
 
 exports.list = function list(req,res){
-    User.find(function(err,users){
+    Product.find(function(err,products){
         if(err)
           return console.log(err);
           else{
-            res.json(users) 
+            res.json(products) 
           }    
     })
 };
 exports.show = function show(req,res){
-    User.findById(req.params.id,function(err,user){
+    Product.findById(req.params.id,function(err,product){
         if(err)
           return console.log(err);
           else{
-            res.json(user)  
+            res.json(product)  
           }  
     })
 };
 exports.create = function create(req,res){
-    let newUser = new User(req.body);
-    newUser.save()
-    res.json(newUser)  
+    let newProduct = new Product(req.body);
+    newProduct.save()
+    res.json(newProduct)  
 };
 exports.update = function update(req,res){
-    User.findByIdAndUpdate(req.params.id,{$set:req.body},{new: true},function(err,user){
+    Product.findByIdAndUpdate(req.params.id,{$set:req.body},{new: true},function(err,product){
         if(err){
             console.log(err)
         }
-        res.json(user)   
+        res.json(product)   
     }); 
 };
 exports.remove = function remove(req,res){
-    User.deleteById(req.params.id,function (err) {});
+    Product.deleteById(req.params.id,function (err) {});
     res.send("deleted")
 }

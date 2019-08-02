@@ -1,37 +1,37 @@
-const User = require('../models/UserModel')
+const Vehicle = require('../models/VehicleModel')
 
 exports.list = function list(req,res){
-    User.find(function(err,users){
+    Vehicle.find(function(err,vehicles){
         if(err)
           return console.log(err);
           else{
-            res.json(users) 
+            res.json(vehicles) 
           }    
     })
 };
 exports.show = function show(req,res){
-    User.findById(req.params.id,function(err,user){
+    Vehicle.findById(req.params.id,function(err,vehicle){
         if(err)
           return console.log(err);
           else{
-            res.json(user)  
+            res.json(vehicle)  
           }  
     })
 };
 exports.create = function create(req,res){
-    let newUser = new User(req.body);
-    newUser.save()
-    res.json(newUser)  
+    let newVehicle = new Vehicle(req.body);
+    newVehicle.save()
+    res.json(newVehicle)  
 };
 exports.update = function update(req,res){
-    User.findByIdAndUpdate(req.params.id,{$set:req.body},{new: true},function(err,user){
+    Vehicle.findByIdAndUpdate(req.params.id,{$set:req.body},{new: true},function(err,vehicle){
         if(err){
             console.log(err)
         }
-        res.json(user)   
+        res.json(vehicle)   
     }); 
 };
 exports.remove = function remove(req,res){
-    User.deleteById(req.params.id,function (err) {});
+    Vehicle.deleteById(req.params.id,function (err) {});
     res.send("deleted")
 }
